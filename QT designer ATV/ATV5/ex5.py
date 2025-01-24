@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog
 
 
 class Ui_MainWindow(object):
@@ -73,6 +74,30 @@ class Ui_MainWindow(object):
 
     def novo(self):
         self.textEdit.setText("")
+    
+    def salvar(self):
+        texto = self.textEdit.toPlainText()
+        arquivo, _ = QFileDialog.getSaveFileName(None, "Salvar Arquivo", "", "Arquivos de Texto (*.txt);;Todos os Arquivos (*)")
+
+        if arquivo:  
+            try:
+                with open(arquivo, "w", encoding="utf-8") as file:
+                    file.write(texto)
+                print(f"Arquivo salvo em: {arquivo}")
+            except Exception as e:
+                print(f"Erro ao salvar o arquivo: {e}")
+
+    def abrir(self):
+        arquivo, _ = QFileDialog.getOpenFileName(None, "Abrir Arquivo", "", "Arquivos de Texto (*.txt);;Todos os Arquivos (*)")
+
+        if arquivo: 
+            try:
+                with open(arquivo, "r", encoding="utf-8") as file:
+                    texto = file.read()
+                    self.textEdit.setText(texto)  
+                print(f"Arquivo aberto: {arquivo}")
+            except Exception as e:
+                print(f"Erro ao abrir o arquivo: {e}")
 
 
 if __name__ == "__main__":
@@ -82,5 +107,7 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     ui.actionSalvar.triggered.connect(ui.novo)
+    ui.actionSalvar_2.triggered.connect(ui.salvar)
+    ui.actionAbrir.triggered.connect(ui.abrir)
     MainWindow.show()
     sys.exit(app.exec_())
