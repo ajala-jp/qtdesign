@@ -99,6 +99,10 @@ class Ui_MainWindow(object):
             except Exception as e:
                 print(f"Erro ao abrir o arquivo: {e}")
 
+    def sair(self):
+        exit()
+        
+
 
 if __name__ == "__main__":
     import sys
@@ -109,5 +113,6 @@ if __name__ == "__main__":
     ui.actionSalvar.triggered.connect(ui.novo)
     ui.actionSalvar_2.triggered.connect(ui.salvar)
     ui.actionAbrir.triggered.connect(ui.abrir)
+    ui.actionSair.triggered.connect(ui.sair)
     MainWindow.show()
     sys.exit(app.exec_())
